@@ -55,7 +55,7 @@ function Navbar() {
         <Menu className="h-8 w-8 text-text-primary" />
       </button>
       <aside
-        className="min-h-[calc(100vh - 70px)] fixed right-0 top-[70px] flex w-[300px] flex-grow translate-x-full flex-col items-center gap-8 border-l bg-background-card pt-8 transition-all duration-150 xl:static xl:min-h-0 xl:w-full xl:translate-x-0 xl:flex-row xl:justify-end xl:border-none xl:bg-transparent xl:pt-0"
+        className="min-h-[calc(100vh-70px)] fixed right-0 top-[70px] flex w-[300px] flex-grow translate-x-full flex-col items-center gap-8 border-l bg-background-card pt-8 transition-all duration-150 xl:static xl:min-h-0 xl:w-full xl:translate-x-0 xl:flex-row xl:justify-end xl:border-none xl:bg-transparent xl:pt-0"
         ref={sidebarRef}
       >
         <Link
