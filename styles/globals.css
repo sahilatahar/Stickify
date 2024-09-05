@@ -3,35 +3,35 @@
 @tailwind utilities;
 
 @layer base {
-    body {
-        @apply mx-auto max-w-screen-2xl overflow-x-hidden;
-    }
+  body {
+    @apply mx-auto max-w-screen-2xl overflow-x-hidden;
+  }
 
-    .gradient {
-        @apply bg-gradient-to-tl from-[#C599E560] via-[#C599E500] to-[#E2CCF280];
-    }
+  .gradient {
+    @apply bg-gradient-to-tl from-[#C599E560] via-[#C599E500] to-[#E2CCF280];
+  }
 
-    .section {
-        @apply px-4 py-4 sm:px-8 md:py-8 lg:px-16;
-    }
+  .section {
+    @apply px-4 py-4 sm:px-8 md:py-8 lg:px-16;
+  }
 
-    .section-title {
-        @apply pb-16 pt-8 text-center text-2xl font-semibold text-text-primary md:text-3xl;
-    }
+  .section-title {
+    @apply pb-16 pt-8 text-center text-2xl font-semibold text-text-primary md:text-3xl;
+  }
 }
 
 @keyframes up-down {
-    0% {
-        transform: translateY(30px);
-    }
-    100% {
-        transform: translateY(0px);
-    }
+  0% {
+    transform: translateY(30px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 :root {
-    scroll-behavior: smooth;
-    /* scroll-padding-top: 10px; */
+  scroll-behavior: smooth;
+  /* scroll-padding-top: 10px; */
 }
 
 /* Overflow Debugging */

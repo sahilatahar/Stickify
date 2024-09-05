@@ -1,5 +1,5 @@
 export interface Sticker {
-	id: string
-	// name: string
-	imgUrl: string
+  id: string;
+  // name: string
+  imgUrl: string;
 }

@@ -1,15 +1,15 @@
-import { Metadata } from "next";
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Sticker Gallery | Stickify",
-    description: "Choose stickers from sticker gallery and order them",
+  title: 'Sticker Gallery | Stickify',
+  description: 'Choose stickers from sticker gallery and order them',
 };
 
 function StickersLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-    return children;
+  return children;
 }
 export default StickersLayout;

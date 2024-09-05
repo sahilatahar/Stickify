@@ -1,12 +1,12 @@
-import OrderStickers from "@/components/OrderStickers";
-import { Metadata } from "next";
+import OrderStickers from '@/components/OrderStickers';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Order Stickers | Stickify",
-    description: "Order stickers now",
+  title: 'Order Stickers | Stickify',
+  description: 'Order stickers now',
 };
 
 function page() {
-    return <OrderStickers />;
+  return <OrderStickers />;
 }
 export default page;

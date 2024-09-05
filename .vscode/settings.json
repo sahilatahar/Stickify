@@ -1,4 +1,4 @@
 {
-    "cSpell.words": ["lucide", "Satoshi", "Swiper", "uidotdev", "usehooks"],
-    "typescript.tsdk": "node_modules\\typescript\\lib"
+  "cSpell.words": ["lucide", "Satoshi", "Swiper", "uidotdev", "usehooks"],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }
