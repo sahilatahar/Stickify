@@ -8,6 +8,7 @@ function Navbar() {
   const navbarRef = useRef<HTMLElement>(null);
   const sidebarRef = useRef<HTMLElement>(null);
   const lastScrollTop = useRef<number>(0);
+
   const toggleNavbar = () =>
     sidebarRef.current?.classList.toggle('translate-x-full');
 
@@ -21,12 +22,12 @@ function Navbar() {
 
     // Hiding Navbar while scrolling down
     if (scrollTop > lastScrollTop.current) {
-      navbarRef.current?.classList.remove('translate-y-0');
-      navbarRef.current?.classList.add('-translate-y-full');
+      navbarRef.current?.classList.remove('top-0');
+      navbarRef.current?.classList.add('-top-20');
     } else {
       // Showing Navbar while scrolling up
-      navbarRef.current?.classList.remove('-translate-y-full');
-      navbarRef.current?.classList.add('translate-y-0');
+      navbarRef.current?.classList.remove('-top-20');
+      navbarRef.current?.classList.add('top-0');
     }
 
     lastScrollTop.current = scrollTop;
@@ -42,12 +43,12 @@ function Navbar() {
 
   return (
     <nav
-      className="sticky top-0 z-10 flex h-[70px] items-center justify-between gap-4 overflow-hidden bg-white p-2 shadow-lg transition-all duration-150 md:p-6 lg:px-12"
+      className="sticky top-0 z-10 flex h-[70px] w-full items-center justify-between gap-4 overflow-hidden bg-white shadow-lg transition-all duration-150 md:px-6 lg:px-12"
       ref={navbarRef}
     >
       <h1>
         <Link href="/" className="flex items-center gap-1 text-3xl font-bold">
-          <Image src="/logo.png" alt="logo" width={60} height={60} />
+          <Image src="/logo.png" alt="logo" width={50} height={50} />
           <span className="tracking-2 text-primary">Stickify</span>
         </Link>
       </h1>
@@ -55,7 +56,7 @@ function Navbar() {
         <Menu className="h-8 w-8 text-text-primary" />
       </button>
       <aside
-        className="min-h-[calc(100vh-70px)] fixed right-0 top-[70px] flex w-[300px] flex-grow translate-x-full flex-col items-center gap-8 border-l bg-background-card pt-8 transition-all duration-150 xl:static xl:min-h-0 xl:w-full xl:translate-x-0 xl:flex-row xl:justify-end xl:border-none xl:bg-transparent xl:pt-0"
+        className="fixed right-0 top-[70px] z-50 flex min-h-[calc(100vh-70px)] w-[300px] flex-grow translate-x-full flex-col items-center gap-8 border-l bg-background-card pt-8 transition-all duration-150 xl:static xl:min-h-0 xl:w-auto xl:translate-x-0 xl:flex-row xl:justify-end xl:border-none xl:bg-transparent xl:pt-0"
         ref={sidebarRef}
       >
         <Link

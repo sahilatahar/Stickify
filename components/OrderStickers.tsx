@@ -14,9 +14,10 @@ function OrderStickers() {
           <Image
             src="/images/human_sticker.jpg"
             alt="sticker 1"
-            width={300}
-            height={300}
-            className="md:animate-up-down"
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="h-auto w-[250px] md:w-[350px] md:animate-up-down"
           />
         </div>
         <div className="w-full px-4 md:w-1/2 md:px-0">
