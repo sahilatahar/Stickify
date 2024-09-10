@@ -8,19 +8,25 @@ const ImageWithPlaceholder = ({ src }: { src: string }) => {
   return (
     <div className="relative h-full w-full">
       {/* Actual Image */}
-      <Image
-        src={src}
-        alt="Sticker Image"
-        onLoad={() => setIsLoaded(true)}
-        width={0}
-        height={0}
-        sizes="100vw"
-        style={{
-          opacity: isLoaded ? 1 : 0,
-        }}
-        className="h-full w-full"
-      />
-
+      <div className="flex w-full flex-col gap-4">
+        <Image
+          src={src}
+          alt="Sticker Image"
+          onLoad={() => setIsLoaded(true)}
+          width={0}
+          height={0}
+          sizes="100vw"
+          style={{
+            opacity: isLoaded ? 1 : 0,
+          }}
+          className="h-[70%] w-auto"
+        />
+        <div>
+          <button className="w-full rounded-md border border-primary p-1 text-sm font-medium text-primary outline-none transition-colors duration-300 hover:bg-primary hover:text-white">
+            Add to Cart
+          </button>
+        </div>
+      </div>
       {/* Placeholder */}
       {!isLoaded && (
         <Image

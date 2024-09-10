@@ -1,4 +1,5 @@
 'use client';
+import ScrollTopButton from '@/components/common/ScrollTopButton';
 import StickerCard from '@/components/common/StickerCard';
 import { getStickers } from '@/data/stickers';
 import { Sticker } from '@/types';
@@ -70,6 +71,8 @@ function StickerGallery() {
       >
         {loading ? 'Loading more stickers...' : ''}
       </p>
+
+      <ScrollTopButton />
     </section>
   );
 }

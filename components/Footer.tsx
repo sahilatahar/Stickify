@@ -31,8 +31,8 @@ function Footer() {
           <Link href="/stickers" className="hover:text-primary">
             Sticker Gallery
           </Link>
-          <Link href="/order-stickers" className="hover:text-primary">
-            Order Stickers
+          <Link href="/personalized-stickers" className="hover:text-primary">
+            Personalized Stickers
           </Link>
           <Link href="/contact-us" className="hover:text-primary">
             Contact Us
@@ -51,7 +51,7 @@ function Footer() {
           <Link href="#" className="hover:text-primary">
             Returns & Refunds
           </Link>
-          <Link href="/order-stickers" className="hover:text-primary">
+          <Link href="#" className="hover:text-primary">
             Payment Options
           </Link>
           <Link href="#" className="hover:text-primary">

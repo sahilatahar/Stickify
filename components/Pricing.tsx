@@ -94,7 +94,7 @@ function Pricing() {
           <p className="text-lg text-text-secondary">
             If you&apos;re interested in ordering a large quantity of stickers,
             please{' '}
-            <Link href="#contact-us" className="text-primary">
+            <Link href="/contact-us" className="text-primary">
               Contact Us
             </Link>{' '}
             for special pricing and details

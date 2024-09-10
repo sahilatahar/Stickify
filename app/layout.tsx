@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import '@/styles/globals.css';
 import type { Metadata } from 'next';
@@ -101,11 +102,11 @@ export default function RootLayout({
           content="/favicon/browserconfig.xml"
         />
         <meta name="theme-color" content="#ffffff" />
-        <link rel="preload" href="/loader.png" as="image" />
       </head>
       <body className={satoshi.className}>
         <Navbar />
         {children}
+        <Footer/>
       </body>
     </html>
   );

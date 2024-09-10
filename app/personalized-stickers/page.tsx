@@ -1,4 +1,4 @@
-import OrderStickers from '@/components/OrderStickers';
+import OrderStickers from '@/components/PersonalizedStickers';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
