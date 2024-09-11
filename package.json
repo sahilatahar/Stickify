@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "npm run open-browser && next dev",
+    "open-browser": "start http://localhost:3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -14,6 +15,7 @@
     "next": "^14.2.8",
     "react": "^18",
     "react-dom": "^18",
+    "react-dropzone": "^14.2.3",
     "swiper": "^11.1.12",
     "uuid": "^10.0.0"
   },

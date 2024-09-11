@@ -7,6 +7,10 @@ export const metadata: Metadata = {
 };
 
 function page() {
-  return <Pricing />;
+  return (
+    <main className="pb-10">
+      <Pricing />
+    </main>
+  );
 }
 export default page;

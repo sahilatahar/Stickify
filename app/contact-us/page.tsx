@@ -7,6 +7,10 @@ export const metadata: Metadata = {
 };
 
 function page() {
-  return <Contact />;
+  return (
+    <main className="pb-10">
+      <Contact />
+    </main>
+  );
 }
 export default page;

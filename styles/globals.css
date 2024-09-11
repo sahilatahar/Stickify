@@ -18,6 +18,26 @@
   .section-title {
     @apply pb-16 pt-8 text-center text-2xl font-semibold text-text-primary md:text-3xl;
   }
+
+  .input-group {
+    @apply flex flex-col gap-2;
+  }
+
+  .input-group label {
+    @apply font-medium text-text-secondary;
+  }
+
+  .input-group input {
+    @apply rounded-md border border-text-muted p-3 px-4 outline-none focus-within:border-primary focus:border-primary;
+  }
+
+  .btn {
+    @apply rounded-md bg-primary p-3 text-lg text-white;
+  }
+
+  .btn-full {
+    @apply w-full rounded-md bg-primary p-3 text-lg text-white;
+  }
 }
 
 @keyframes up-down {

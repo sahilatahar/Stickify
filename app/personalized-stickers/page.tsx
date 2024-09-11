@@ -1,4 +1,4 @@
-import OrderStickers from '@/components/PersonalizedStickers';
+import PersonalizedStickers from '@/components/PersonalizedStickers';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -7,6 +7,10 @@ export const metadata: Metadata = {
 };
 
 function page() {
-  return <OrderStickers />;
+  return (
+    <main className="pb-10">
+      <PersonalizedStickers />
+    </main>
+  );
 }
 export default page;
