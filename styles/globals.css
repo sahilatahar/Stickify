@@ -32,7 +32,7 @@
   }
 
   .btn {
-    @apply rounded-md bg-primary p-3 text-lg text-white;
+    @apply w-auto rounded-md bg-primary p-3 text-lg text-white;
   }
 
   .btn-full {

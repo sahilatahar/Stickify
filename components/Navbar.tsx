@@ -52,7 +52,7 @@ function Navbar() {
 
   return (
     <nav
-      className="sticky left-0 z-10 flex h-[70px] w-full items-center justify-between gap-4 bg-background-card px-2 shadow-lg transition-all duration-150 md:px-6 lg:px-12"
+      className="sticky left-0 z-10 flex h-[70px] w-full items-center justify-between gap-4 bg-background-card px-2 shadow-lg transition-all duration-150 md:px-6 xl:px-12"
       ref={navbarRef}
     >
       <h1>
@@ -65,7 +65,7 @@ function Navbar() {
         <Menu className="h-8 w-8 text-text-primary" />
       </button>
       <aside
-        className="fixed right-0 top-[70px] z-20 flex max-h-fit min-h-[calc(100vh-70px)] w-[300px] flex-grow translate-x-full flex-col items-center gap-8 border-l border-t bg-background-card pt-8 transition-all duration-150 xl:static xl:top-0 xl:h-auto xl:min-h-0 xl:w-auto xl:translate-x-0 xl:flex-row xl:justify-end xl:border-none xl:bg-transparent xl:pt-0"
+        className="fixed right-0 top-[70px] z-20 flex max-h-fit min-h-[calc(100vh-70px)] w-[300px] flex-grow translate-x-full flex-col items-center gap-8 border-l border-t bg-background-card px-4 pt-8 transition-all duration-150 xl:static xl:top-0 xl:h-auto xl:min-h-0 xl:w-auto xl:translate-x-0 xl:flex-row xl:justify-end xl:border-none xl:bg-transparent xl:px-0 xl:pt-0"
         ref={sidebarRef}
       >
         <Link
@@ -105,6 +105,12 @@ function Navbar() {
           href="/contact-us"
         >
           Contact Us
+        </Link>
+        <Link
+          className="w-full rounded-md bg-primary px-8 pb-2 pt-1 text-center text-lg text-white xl:w-auto"
+          href="/login"
+        >
+          Login
         </Link>
       </aside>
     </nav>
