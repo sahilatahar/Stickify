@@ -1,8 +1,12 @@
+'use client';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
+import { StickerProvider } from '@/context/StickerContext';
+import { UserProvider } from '@/context/UserContext';
 import '@/styles/globals.css';
-import type { Metadata } from 'next';
+import { SessionProvider } from 'next-auth/react';
 import localFont from 'next/font/local';
+import { Toaster } from 'react-hot-toast';
 
 const satoshi = localFont({
   src: [
@@ -59,11 +63,6 @@ const satoshi = localFont({
   ],
 });
 
-export const metadata: Metadata = {
-  title: 'Stickify',
-  description: 'Get unique sticker | Stickify',
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -104,9 +103,16 @@ export default function RootLayout({
         <meta name="theme-color" content="#ffffff" />
       </head>
       <body className={satoshi.className}>
-        <Navbar />
-        {children}
-        <Footer/>
+        <SessionProvider>
+          <UserProvider>
+            <StickerProvider>
+              <Navbar />
+              {children}
+              <Footer />
+              <Toaster position="top-right" />
+            </StickerProvider>
+          </UserProvider>
+        </SessionProvider>
       </body>
     </html>
   );

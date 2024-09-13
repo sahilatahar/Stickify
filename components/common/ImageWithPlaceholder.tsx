@@ -19,13 +19,8 @@ const ImageWithPlaceholder = ({ src }: { src: string }) => {
           style={{
             opacity: isLoaded ? 1 : 0,
           }}
-          className="h-[70%] w-auto"
+          className="block h-[70%] w-auto"
         />
-        <div>
-          <button className="w-full rounded-md border border-primary p-1 text-sm font-medium text-primary outline-none transition-colors duration-300 hover:bg-primary hover:text-white">
-            Add to Cart
-          </button>
-        </div>
       </div>
       {/* Placeholder */}
       {!isLoaded && (

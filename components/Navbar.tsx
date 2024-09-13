@@ -1,15 +1,17 @@
 'use client';
-import { Menu, ChevronDown } from 'lucide-react';
+import { Menu, ChevronDown, ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import StickersMenu from './menu/StickersMenu';
+import { useSession } from 'next-auth/react';
 
 function Navbar() {
   const navbarRef = useRef<HTMLElement>(null);
   const sidebarRef = useRef<HTMLElement>(null);
   const lastScrollTop = useRef<number>(0);
   const [showStickerMenu, setShowStickerMenu] = useState<boolean>(false);
+  const { status } = useSession();
 
   const toggleStickerMenu = useCallback(() => {
     setShowStickerMenu(!showStickerMenu);
@@ -106,12 +108,19 @@ function Navbar() {
         >
           Contact Us
         </Link>
-        <Link
-          className="w-full rounded-md bg-primary px-8 pb-2 pt-1 text-center text-lg text-white xl:w-auto"
-          href="/login"
-        >
-          Login
-        </Link>
+        {status === 'authenticated' ? (
+          <Link href="/cart">
+            <ShoppingCart className="text-text-secondary" />
+          </Link>
+        ) : (
+          <Link
+            className="w-full rounded-md bg-primary px-8 pb-2 pt-1 text-center text-lg text-white xl:w-auto"
+            onClick={toggleSidebar}
+            href="/login"
+          >
+            Login
+          </Link>
+        )}
       </aside>
     </nav>
   );

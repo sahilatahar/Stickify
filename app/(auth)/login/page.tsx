@@ -1,37 +1,56 @@
 'use client';
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useRef } from 'react';
+import toast from 'react-hot-toast';
 
 function Login() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Simple validation
-    if (!formData.email || !formData.password) {
-      setError('Both fields are required');
+    if (!emailRef.current || !passwordRef.current) return;
+
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+
+    if (!email) {
+      toast.error('Email is required');
       return;
     }
 
-    // Call your backend API for login
-    console.log('Login data submitted', formData);
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      toast.error('Invalid email format');
+      return;
+    }
 
-    // Clear form and error after submission
-    setFormData({
-      email: '',
-      password: '',
+    if (!password) {
+      toast.error('Password is required');
+      return;
+    }
+
+    if (password.length < 6) {
+      toast.error('Password must be at least 6 characters');
+      return;
+    }
+
+    // Proceed with the sign-in request if validation passes
+    const res = await signIn('credentials', {
+      redirect: false,
+      email,
+      password,
     });
-    setError(null);
+
+    if (res?.error) {
+      toast.error(res.error);
+    } else {
+      router.push('/');
+    }
   };
 
   return (
@@ -49,8 +68,7 @@ function Login() {
               type="email"
               id="email"
               name="email"
-              value={formData.email}
-              onChange={handleChange}
+              ref={emailRef}
               required
             />
           </div>
@@ -60,12 +78,10 @@ function Login() {
               type="password"
               id="password"
               name="password"
-              value={formData.password}
-              onChange={handleChange}
+              ref={passwordRef}
               required
             />
           </div>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
           <button className="btn-full mt-4" type="submit">
             Login
           </button>

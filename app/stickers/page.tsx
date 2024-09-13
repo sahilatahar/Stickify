@@ -1,52 +1,19 @@
 'use client';
+import { LoadingPage } from '@/components/common/Loading';
 import ScrollTopButton from '@/components/common/ScrollTopButton';
 import StickerCard from '@/components/common/StickerCard';
-import { getStickers } from '@/data/stickers';
-import { Sticker } from '@/types';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useStickers } from '@/context/StickerContext';
+import { useUserContext } from '@/context/UserContext';
+import { Plus } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
 function StickerGallery() {
-  const [availableStickers, setAvailableSticker] = useState<Sticker[]>([]);
-  const [loading, setLoading] = useState(false);
-  const loadMoreRef = useRef<HTMLParagraphElement>(null);
-  const [stickersLeft, setStickersLeft] = useState<number>(0);
+  const { stickers, isLoading } = useStickers();
+  const { user } = useUserContext();
+  const { status } = useSession();
 
-  const loadMore = useCallback(async () => {
-    let start = availableStickers.length;
-    let end = stickersLeft >= 30 ? start + 30 : start + stickersLeft;
-    setLoading(true);
-    await new Promise((resolve) => setTimeout(() => resolve(0), 1000));
-    setAvailableSticker((pre) => [...pre, ...getStickers(start, end).data]);
-    setLoading(false);
-  }, [availableStickers.length, stickersLeft]);
-
-  useEffect(() => {
-    const loadMoreElem = loadMoreRef.current;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !loading) {
-          loadMore();
-        }
-      },
-      { threshold: 0.5 }, // Trigger when 100% of the element is visible
-    );
-
-    if (loadMoreElem) {
-      observer.observe(loadMoreElem);
-    }
-
-    return () => {
-      if (loadMoreElem) {
-        observer.unobserve(loadMoreElem);
-      }
-    };
-  }, [loadMore, loading]);
-
-  useEffect(() => {
-    const response = getStickers(1, 30);
-    setAvailableSticker(response.data);
-    setStickersLeft(response.left);
-  }, []);
+  if (isLoading || status !== 'authenticated') return <LoadingPage />;
 
   return (
     <section className="section pt-8">
@@ -60,18 +27,34 @@ function StickerGallery() {
         download it, and when you&apos;re placing your order, you can upload the
         sticker you chose or your own custom image. It&apos;s that easy!
       </p>
+      {user?.role === 'admin' && (
+        <div className="flex justify-end py-4">
+          <Link
+            href="/stickers/add"
+            className="border-success text-success hover:bg-success text-md ml-auto flex items-center gap-2 rounded-md border px-4 py-2 text-center font-medium outline-none transition-colors duration-300 hover:text-white"
+          >
+            <Plus />
+            <span>Add New Sticker</span>
+          </Link>
+        </div>
+      )}
       <div className="flex flex-wrap justify-center gap-4 pt-8 md:gap-8">
-        {availableStickers.map(({ imgUrl, id }) => (
-          <StickerCard key={id} id={id} imgUrl={imgUrl} />
-        ))}
+        {stickers.map(({ imageUrl, _id, name }) => {
+          let isInCart = false;
+          if (user) {
+            isInCart = user?.cartItems.some((item) => item.stickerId === _id);
+          }
+          return (
+            <StickerCard
+              key={_id}
+              id={_id}
+              imageUrl={imageUrl}
+              isInCart={isInCart}
+              name={name}
+            />
+          );
+        })}
       </div>
-      <p
-        className="w-full pt-8 text-center text-lg font-medium text-text-primary"
-        ref={loadMoreRef}
-      >
-        {loading ? 'Loading more stickers...' : ''}
-      </p>
-
       <ScrollTopButton />
     </section>
   );

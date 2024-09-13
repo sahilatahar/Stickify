@@ -1,40 +1,23 @@
 'use client';
+import { register } from '@/action/user';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 function Register() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
-
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const router = useRouter();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // form validation (ensure passwords match)
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return;
+    const formData = new FormData(e.currentTarget);
+    const result = await register(formData);
+
+    if (result.error) {
+      toast.error(result.error);
+    } else {
+      toast.success('Account created successfully!');
+      router.replace('/login');
     }
-
-    // Call to the backend API for registration
-
-    // Reset form after successful submission
-    setFormData({
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    });
-    setError(null);
   };
 
   return (
@@ -48,36 +31,15 @@ function Register() {
         <form className="flex w-full flex-col gap-4" onSubmit={handleSubmit}>
           <div className="input-group">
             <label htmlFor="name">Full Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
+            <input type="text" id="name" name="name" required />
           </div>
           <div className="input-group">
             <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
+            <input type="email" id="email" name="email" required />
           </div>
           <div className="input-group">
             <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
+            <input type="password" id="password" name="password" required />
           </div>
           <div className="input-group">
             <label htmlFor="confirmPassword">Confirm Password</label>
@@ -85,12 +47,9 @@ function Register() {
               type="password"
               id="confirmPassword"
               name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
               required
             />
           </div>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
           <button className="btn-full mt-4" type="submit">
             Create Account
           </button>

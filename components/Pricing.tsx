@@ -83,7 +83,7 @@ function Pricing() {
             </div>
           </div>
         </div>
-        <p className="text-md text-end font-medium text-accent-success">
+        <p className="text-md text-success text-end font-medium">
           All India Shipping: Rs. 60
         </p>
         <div className="pt-4">

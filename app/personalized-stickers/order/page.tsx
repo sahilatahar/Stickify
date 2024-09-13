@@ -55,7 +55,7 @@ function PersonalizedOrder() {
             <input type="tel" name="phoneNumber" id="phoneNumber" />
           </div>
           <div className="input-group">
-            <label htmlFor="email">Address</label>
+            <label htmlFor="address">Address</label>
             <input type="text" name="address" id="address" />
           </div>
 
