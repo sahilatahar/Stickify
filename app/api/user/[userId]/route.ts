@@ -6,10 +6,6 @@ import * as yup from 'yup';
 // Define Yup validation schema
 const userSchema = yup.object().shape({
   name: yup.string().required('Name is required').trim(),
-  email: yup
-    .string()
-    .email('Invalid email format')
-    .required('Email is required'),
   address: yup.string().optional(),
 });
 
@@ -44,18 +40,14 @@ export async function PUT(
   { params }: { params: { userId: string } },
 ) {
   const { userId } = params;
-  const { name, email, address } = await req.json();
+  const { name, address } = await req.json();
 
   try {
     // Validate input data
-    await userSchema.validate({ name, email, address }, { abortEarly: false });
+    await userSchema.validate({ name, address }, { abortEarly: false });
 
     await connectDB();
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { name, email, address },
-      { new: true, runValidators: true },
-    );
+    const updatedUser = await User.findByIdAndUpdate(userId, { name, address });
 
     if (!updatedUser) {
       return NextResponse.json({ message: 'User not found' }, { status: 404 });

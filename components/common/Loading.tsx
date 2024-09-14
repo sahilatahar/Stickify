@@ -1,12 +1,16 @@
 import { Bars } from 'react-loader-spinner';
 
 function Loading() {
-  return <Bars color="#6300B3" width={50} />;
+  return (
+    <main className="flex h-[300px] items-center justify-center">
+      <Bars color="#6300B3" width={40} />
+    </main>
+  );
 }
 
 function LoadingPage() {
   return (
-    <main className="grid min-h-[calc(100vh-70px)] max-w-screen-xl place-items-center">
+    <main className="flex min-h-[calc(100vh-70px)] items-center justify-center">
       <Loading />
     </main>
   );

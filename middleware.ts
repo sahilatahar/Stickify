@@ -25,7 +25,7 @@ export async function middleware(req: NextRequest) {
 
     if (!token) {
       // Token is not present or invalid
-      return NextResponse.redirect(new URL('/login', req.url));
+      return new NextResponse('Forbidden', { status: 403 });
     }
 
     // Decode the token to get user role and ID
@@ -37,17 +37,11 @@ export async function middleware(req: NextRequest) {
       return NextResponse.next();
     }
 
-    // For users, ensure the correct method and user ID
     if (userRole === 'user') {
-      // Allow only GET method for regular users
-      if (method !== 'GET') {
-        return new NextResponse('Forbidden', { status: 403 });
-      }
-
-      // Check if the request URL includes the user's ID for individual resources
       const url = new URL(req.url);
       const id = url.pathname.split('/').pop();
 
+      // If user is requesting for own data it will send not other users
       if (id !== userId) {
         return new NextResponse('Forbidden', { status: 403 });
       }

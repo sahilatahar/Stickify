@@ -11,6 +11,7 @@ export async function POST(req: NextRequest) {
     if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
       return NextResponse.json({ message: 'Invalid User ID' }, { status: 400 });
     }
+
     if (!stickerId || !mongoose.Types.ObjectId.isValid(stickerId)) {
       return NextResponse.json(
         { message: 'Invalid Sticker data' },
@@ -34,37 +35,12 @@ export async function POST(req: NextRequest) {
 
     // Add the sticker to the cart
     user.cartItems.push({
-      sticker: new mongoose.Types.ObjectId(stickerId),
+      stickerId,
       quantity,
     });
-    await user.save();
+    const updatedUser = await user.save();
 
-    return NextResponse.json({ message: 'Sticker added to cart successfully' });
-  } catch (error: any) {
-    return NextResponse.json(
-      { message: 'Something went wrong', error: error.message },
-      { status: 500 },
-    );
-  }
-}
-
-export async function GET(req: NextRequest) {
-  try {
-    const userId = req.nextUrl.searchParams.get('userId');
-
-    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
-      return NextResponse.json({ message: 'Invalid User ID' }, { status: 400 });
-    }
-
-    await connectDB();
-
-    const user = await User.findById(userId).populate('cartItems.stickerId');
-
-    if (!user) {
-      return NextResponse.json({ message: 'User not found' }, { status: 404 });
-    }
-
-    return NextResponse.json(user.cartItems);
+    return NextResponse.json(updatedUser);
   } catch (error: any) {
     return NextResponse.json(
       { message: 'Something went wrong', error: error.message },
@@ -98,13 +74,12 @@ export async function DELETE(req: NextRequest) {
 
     // Remove sticker from cart
     user.cartItems = user.cartItems.filter(
-      (item: any) => item.sticker !== stickerId,
+      (item: any) => item.stickerId.toString() !== stickerId,
     );
-    await user.save();
 
-    return NextResponse.json({
-      message: 'Sticker removed from cart successfully',
-    });
+    const updatedUser = await user.save();
+
+    return NextResponse.json(updatedUser);
   } catch (error: any) {
     return NextResponse.json(
       { message: 'Something went wrong', error: error.message },

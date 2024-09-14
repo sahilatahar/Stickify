@@ -1,10 +1,11 @@
 'use client';
-import { Menu, ChevronDown, ShoppingCart } from 'lucide-react';
+import { Menu, ChevronDown, ShoppingCart, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import StickersMenu from './menu/StickersMenu';
 import { useSession } from 'next-auth/react';
+import { useWindowSize } from '@uidotdev/usehooks';
 
 function Navbar() {
   const navbarRef = useRef<HTMLElement>(null);
@@ -12,6 +13,7 @@ function Navbar() {
   const lastScrollTop = useRef<number>(0);
   const [showStickerMenu, setShowStickerMenu] = useState<boolean>(false);
   const { status } = useSession();
+  const { width } = useWindowSize();
 
   const toggleStickerMenu = useCallback(() => {
     setShowStickerMenu(!showStickerMenu);
@@ -43,6 +45,10 @@ function Navbar() {
 
     lastScrollTop.current = scrollTop;
   }, [showStickerMenu, toggleSidebar, toggleStickerMenu]);
+
+  const renderLinkContent = (text: string, Icon: any) => {
+    return width && width < 1024 ? text : <Icon />;
+  };
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -109,9 +115,22 @@ function Navbar() {
           Contact Us
         </Link>
         {status === 'authenticated' ? (
-          <Link href="/cart">
-            <ShoppingCart className="text-text-secondary" />
-          </Link>
+          <>
+            <Link
+              href="/cart"
+              className="text-lg font-medium text-text-secondary hover:text-primary"
+              onClick={toggleSidebar}
+            >
+              {renderLinkContent('Cart', ShoppingCart)}
+            </Link>
+            <Link
+              href="/profile"
+              className="text-lg font-medium text-text-secondary hover:text-primary"
+              onClick={toggleSidebar}
+            >
+              {renderLinkContent('Profile', User)}
+            </Link>
+          </>
         ) : (
           <Link
             className="w-full rounded-md bg-primary px-8 pb-2 pt-1 text-center text-lg text-white xl:w-auto"

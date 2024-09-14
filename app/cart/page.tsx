@@ -1,38 +1,51 @@
 'use client';
+import { Loading } from '@/components/common/Loading';
 import ScrollTopButton from '@/components/common/ScrollTopButton';
+import StickerCard from '@/components/common/StickerCard';
+import { useStickers } from '@/context/StickerContext';
 import { useUserContext } from '@/context/UserContext';
+import { StickerInterface as Sticker } from '@/types';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import NotFound from '../not-found';
 
 function Cart() {
   const router = useRouter();
   const { status } = useSession();
-  const { user, fetchUserData } = useUserContext();
+  const { user } = useUserContext();
+  const { stickers } = useStickers();
 
-  // if (status === 'loading') {
-  //   return <LoadingPage />;
-  // } else if (status === 'unauthenticated') {
-  //   router.push('/login');
-  //   return;
-  // }
+  if (status === 'loading') {
+    return <Loading />;
+  } else if (status === 'unauthenticated') {
+    router.push('/login');
+    return;
+  } else if (user?.role === 'admin') {
+    return <NotFound />;
+  }
 
   return (
     <section className="section pt-8">
-      <h1 className="section-title flex items-center md:gap-4">
-        <hr className="w-2/3" />
-        <span className="min-w-fit">Your Cart</span>
-        <hr className="w-2/3" />
-      </h1>
-      <p className="mx-auto max-w-screen-lg px-4 text-center text-lg text-text-secondary">
-        Explore our gallery of ready-made stickers. Just click on a sticker to
-        download it, and when you&apos;re placing your order, you can upload the
-        sticker you chose or your own custom image. It&apos;s that easy!
-      </p>
-      {/* <div className="flex flex-wrap justify-center gap-4 pt-8 md:gap-8">
-        {user?.cartItems.map(({ imageUrl, _id }: StickerInterface) => (
-          <StickerCard key={_id} imageUrl={imageUrl} />
-        ))}
-      </div> */}
+      <h1 className="section-title text-center text-3xl">Your Cart</h1>
+      <div className="flex flex-wrap justify-center gap-4 pt-8 md:gap-8">
+        {stickers
+          .filter((s) => user?.cartItems.some((i) => i.stickerId === s._id))
+          .map(({ imageUrl, _id, name }: Sticker) => (
+            <StickerCard
+              key={_id}
+              imageUrl={imageUrl}
+              name={name}
+              id={_id}
+              isInCart={true}
+            />
+          ))}
+        {user && user?.cartItems.length === 0 && (
+          <p className="pb-20 text-center text-lg text-text-secondary">
+            Your cart is empty. Start adding some awesome stickers from our
+            collection to get started!
+          </p>
+        )}
+      </div>
       <ScrollTopButton />
     </section>
   );

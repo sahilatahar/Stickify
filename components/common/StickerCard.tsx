@@ -32,12 +32,12 @@ function StickerCard({
         <div className="w-full space-y-2">
           <Link
             href={'/stickers/update/' + id}
-            className="border-warning text-warning hover:bg-warning block w-full rounded-md border p-1 text-center text-sm font-medium outline-none transition-colors duration-300 hover:text-white"
+            className="block w-full rounded-md border border-warning p-1 text-center text-sm font-medium text-warning outline-none transition-colors duration-300 hover:bg-warning hover:text-white"
           >
             Update
           </Link>
           <button
-            className="border-danger text-danger hover:bg-danger w-full rounded-md border p-1 text-sm font-medium outline-none transition-colors duration-300 hover:text-white"
+            className="w-full rounded-md border border-danger p-1 text-sm font-medium text-danger outline-none transition-colors duration-300 hover:bg-danger hover:text-white"
             onClick={handleStickerDelete}
           >
             Delete
@@ -45,7 +45,7 @@ function StickerCard({
         </div>
       ) : isInCart ? (
         <button
-          className="border-danger text-danger hover:bg-danger w-full rounded-md border p-1 text-sm font-medium outline-none transition-colors duration-300 hover:text-white"
+          className="w-full rounded-md border border-danger p-1 text-xs font-medium text-danger outline-none transition-colors duration-300 hover:bg-danger hover:text-white sm:text-sm"
           onClick={() => removeFromCart(id)}
         >
           Remove from Cart

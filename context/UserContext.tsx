@@ -14,11 +14,15 @@ import {
   addToCart,
   removeFromCart,
   updateCart,
+  updateUserData,
 } from '@/lib/user';
+import { useRouter } from 'next/navigation';
 
 interface UserContextType {
   user: User | null;
+  isLoading: boolean;
   fetchUserData: () => void;
+  updateUser: (name: string, address: string) => void;
   addToCart: (stickerId: string, quantity: number) => void;
   removeFromCart: (stickerId: string) => void;
   updateCart: (stickerId: string, quantity: number) => void;
@@ -28,8 +32,10 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data: session, status } = useSession(); // NextAuth session
+  const { data: session } = useSession(); // NextAuth session
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   const loadUserData = useCallback(async () => {
     if (session?.user) {
@@ -38,6 +44,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(data);
       } catch (error: any) {
         toast.error('Failed to fetch user data');
+      } finally {
+        setIsLoading(false);
       }
     }
   }, [session?.user]);
@@ -48,8 +56,28 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [loadUserData, session]);
 
-  const handleAddToCart = async (stickerId: string, quantity: number) => {
+  const updateUser = async (name: string, address: string) => {
     if (!user) return;
+
+    setUser({
+      ...user,
+      name,
+      address,
+    });
+
+    try {
+      await updateUserData(user._id, { name, address });
+      toast.success('Profile updated');
+    } catch (error: any) {
+      toast.error('Failed to update profile');
+    }
+  };
+
+  const handleAddToCart = async (stickerId: string, quantity: number) => {
+    if (!user) {
+      router.push('/login');
+      return;
+    }
 
     const previousCart = user.cartItems;
     const updatedCart = [...user.cartItems, { stickerId, quantity }];
@@ -65,7 +93,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       toast.success('Added to cart');
     } catch (error: any) {
       setUser({ ...user, cartItems: previousCart });
-      toast.error('Error adding to cart');
+      toast.error('Failed to add into cart');
     }
   };
 
@@ -88,7 +116,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       toast.success('Removed from cart');
     } catch (error: any) {
       setUser({ ...user, cartItems: previousCart });
-      toast.error('Error removing from cart');
+      toast.error('Failed to removing from cart');
     }
   };
 
@@ -111,7 +139,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       toast.success('Cart updated');
     } catch (error: any) {
       setUser({ ...user, cartItems: previousCart });
-      toast.error('Error updating cart');
+      toast.error('Failed to updating cart');
     }
   };
 
@@ -123,6 +151,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     <UserContext.Provider
       value={{
         user,
+        isLoading,
+        updateUser,
         fetchUserData: loadUserData,
         addToCart: handleAddToCart,
         removeFromCart: handleRemoveFromCart,

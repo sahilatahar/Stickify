@@ -9,7 +9,6 @@ const handler = NextAuth({
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        name: { label: 'Name', type: 'text' },
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
@@ -59,22 +58,18 @@ const handler = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.role = user.role;
       }
       return token;
     },
     async session({ session, token }) {
       if (session?.user) {
         session.user.id = token.id;
+        session.user.role = token.role;
       }
       return session;
     },
   },
 });
 
-interface Session {
-  user: {
-    id: string;
-    role: string;
-  };
-}
 export { handler as GET, handler as POST };
