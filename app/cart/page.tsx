@@ -12,10 +12,10 @@ import NotFound from '../not-found';
 function Cart() {
   const router = useRouter();
   const { status } = useSession();
-  const { user } = useUserContext();
+  const { user, isLoading } = useUserContext();
   const { stickers } = useStickers();
 
-  if (status === 'loading') {
+  if (isLoading || status === 'loading') {
     return <Loading />;
   } else if (status === 'unauthenticated') {
     router.push('/login');

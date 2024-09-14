@@ -1,6 +1,6 @@
 'use client';
 import { UserInterface as User } from '@/types';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import {
   createContext,
   useCallback,
@@ -34,12 +34,13 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const { data: session } = useSession(); // NextAuth session
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const loadUserData = useCallback(async () => {
     if (session?.user) {
       try {
+        setIsLoading(true);
         const data = await fetchUserData(session.user.id);
         setUser(data);
       } catch (error: any) {
@@ -145,6 +146,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logoutUser = () => {
     setUser(null);
+    signOut({
+      callbackUrl: '/',
+    });
   };
 
   return (

@@ -4,11 +4,12 @@ import { useUserContext } from '@/context/UserContext';
 import { useSession } from 'next-auth/react';
 import { FormEvent } from 'react';
 import toast from 'react-hot-toast';
-import NotFound from '../not-found';
+import { useRouter } from 'next/navigation';
 
 function Profile() {
-  const { user, updateUser, isLoading } = useUserContext();
-  const { status } = useSession();
+  const { user, updateUser, isLoading, logoutUser } = useUserContext();
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
   const handleUpdate = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,7 +30,7 @@ function Profile() {
   };
 
   if (isLoading || status === 'loading') return <Loading />;
-  if (!user) return <NotFound />;
+  else if (!session?.user) router.push('/login');
 
   return (
     <section className="section pb-20">
@@ -67,12 +68,21 @@ function Profile() {
               />
             </div>
           </div>
-          <button
-            type="submit"
-            className="btn-full mx-auto mt-6 md:w-fit md:px-8"
-          >
-            Update Profile
-          </button>
+          <div className="flex flex-col gap-4 md:flex-row">
+            <button
+              type="submit"
+              className="btn-full mx-auto mt-6 bg-danger md:w-fit md:px-8"
+              onClick={logoutUser}
+            >
+              Log out
+            </button>
+            <button
+              type="submit"
+              className="btn-full mx-auto mt-6 md:w-fit md:px-8"
+            >
+              Update Profile
+            </button>
+          </div>
         </form>
       </div>
     </section>

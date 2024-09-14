@@ -2,13 +2,14 @@
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
 function Login() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +40,7 @@ function Login() {
       return;
     }
 
+    setLoading(true);
     // Proceed with the sign-in request if validation passes
     const res = await signIn('credentials', {
       redirect: false,
@@ -48,6 +50,7 @@ function Login() {
 
     if (res?.error) {
       toast.error(res.error);
+      setLoading(false);
     } else {
       router.push('/');
     }
@@ -82,7 +85,7 @@ function Login() {
               required
             />
           </div>
-          <button className="btn-full mt-4" type="submit">
+          <button className="btn-full mt-4" type="submit" disabled={loading}>
             Login
           </button>
         </form>

@@ -26,11 +26,12 @@ export const StickerProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [stickers, setStickers] = useState<Sticker[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchAllStickers = async () => {
       try {
+        setIsLoading(true);
         const fetchedStickers = await fetchStickers();
         setStickers(fetchedStickers);
       } catch (error) {
