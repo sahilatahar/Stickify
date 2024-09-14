@@ -1,4 +1,4 @@
-# Stickify
+![logo](https://github.com/user-attachments/assets/cd258da2-9b41-4794-9900-064b811af03b)
 
 **Stickify** is a modern web application built using Next.js and TypeScript, with a responsive UI powered by Tailwind CSS. It allows users to manage their profile, add and remove stickers from their cart, and explore a vibrant gallery of stickers.
 
