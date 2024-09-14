@@ -13,7 +13,7 @@ function StickerGallery() {
   const { user } = useUserContext();
   const { status } = useSession();
 
-  if (isLoading || status !== 'authenticated') return <Loading />;
+  if (isLoading || status === 'loading') return <Loading />;
 
   return (
     <section className="section pt-8">
