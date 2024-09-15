@@ -6,6 +6,7 @@ import { useDropzone } from 'react-dropzone';
 
 function PersonalizedOrder() {
   const [images, setImages] = useState<File[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const onDrop = (acceptedFiles: File[]) => {
     if (acceptedFiles.length > 5) {
@@ -103,11 +104,13 @@ function PersonalizedOrder() {
             )}
           </div>
 
-          <input
+          <button
+            className="btn-full mt-4 disabled:cursor-no-drop disabled:opacity-50"
             type="submit"
-            value="Confirm and Order"
-            className="btn-full mt-4"
-          />
+            disabled={loading}
+          >
+            Confirm and Order
+          </button>
         </form>
       </div>
     </section>

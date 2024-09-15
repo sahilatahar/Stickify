@@ -1,5 +1,6 @@
 'use client';
-import { signIn } from 'next-auth/react';
+import { Loading } from '@/components/common/Loading';
+import { signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
@@ -10,6 +11,7 @@ function Login() {
   const passwordRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
+  const { status } = useSession();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,6 +58,12 @@ function Login() {
     }
   };
 
+  // Redirect to Home if user is logged in
+  if (status === 'loading') return <Loading />;
+  else if (status === 'authenticated') {
+    router.replace('/');
+  }
+
   return (
     <section className="section pb-20">
       <h1 className="section-title pb-4 text-center">Login to Your Account</h1>
@@ -67,13 +75,7 @@ function Login() {
         <form className="flex w-full flex-col gap-4" onSubmit={handleSubmit}>
           <div className="input-group">
             <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              ref={emailRef}
-              required
-            />
+            <input type="email" id="email" name="email" ref={emailRef} />
           </div>
           <div className="input-group">
             <label htmlFor="password">Password</label>
@@ -82,10 +84,13 @@ function Login() {
               id="password"
               name="password"
               ref={passwordRef}
-              required
             />
           </div>
-          <button className="btn-full mt-4" type="submit" disabled={loading}>
+          <button
+            className="btn-full mt-4 disabled:cursor-no-drop disabled:opacity-50"
+            type="submit"
+            disabled={loading}
+          >
             Login
           </button>
         </form>

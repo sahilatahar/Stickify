@@ -26,7 +26,18 @@ function Cart() {
 
   return (
     <section className="section pt-8">
-      <h1 className="section-title text-center text-3xl">Your Cart</h1>
+      <h1 className="section-title flex items-center gap-4 text-center text-3xl">
+        <hr className="w-2/3" />
+        <span className="min-w-fit">Your Cart</span>
+        <hr className="w-2/3" />
+      </h1>
+      <p className="mx-auto max-w-screen-lg px-4 text-center text-lg text-text-secondary">
+        Your cart items are listed below. Browse and review your selected
+        stickers. When you&apos;re ready, you can place your order using the
+        stickers in your cart or upload custom designs. Getting your stickers
+        has never been easier!
+      </p>
+
       <div className="flex flex-wrap justify-center gap-4 pt-8 md:gap-8">
         {stickers
           .filter((s) => user?.cartItems.some((i) => i.stickerId === s._id))

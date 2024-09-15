@@ -15,7 +15,7 @@ export const fetchUserData = async (userId: string): Promise<User | null> => {
 
 export const updateUserData = async (
   userId: string,
-  data: { name: string; address: string },
+  data: { name: string; address: string; phoneNumber: string },
 ) => {
   try {
     const res = await fetch(`/api/user/${userId}`, {

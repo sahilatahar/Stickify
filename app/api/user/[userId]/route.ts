@@ -6,6 +6,13 @@ import * as yup from 'yup';
 // Define Yup validation schema
 const userSchema = yup.object().shape({
   name: yup.string().required('Name is required').trim(),
+  phoneNumber: yup
+    .string()
+    .matches(
+      /^[789]\d{9}$/,
+      'Invalid phone number. Must be a 10-digit number starting with 7, 8, or 9.',
+    )
+    .required('Phone number is required'),
   address: yup.string().optional(),
 });
 
@@ -40,14 +47,21 @@ export async function PUT(
   { params }: { params: { userId: string } },
 ) {
   const { userId } = params;
-  const { name, address } = await req.json();
+  const { name, phoneNumber, address } = await req.json();
 
   try {
     // Validate input data
-    await userSchema.validate({ name, address }, { abortEarly: false });
+    await userSchema.validate(
+      { name, phoneNumber, address },
+      { abortEarly: false },
+    );
 
     await connectDB();
-    const updatedUser = await User.findByIdAndUpdate(userId, { name, address });
+    const updatedUser = await User.findByIdAndUpdate(userId, {
+      name,
+      phoneNumber,
+      address,
+    });
 
     if (!updatedUser) {
       return NextResponse.json({ message: 'User not found' }, { status: 404 });

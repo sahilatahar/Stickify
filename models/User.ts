@@ -17,6 +17,12 @@ const userSchema = new Schema(
       required: true,
       minlength: 6,
     },
+    phoneNumber: {
+      type: String,
+      required: true,
+      match: /^[789]\d{9}$/,
+      trim: true,
+    },
     role: {
       type: String,
       default: 'user',

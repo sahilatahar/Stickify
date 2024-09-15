@@ -22,7 +22,7 @@ interface UserContextType {
   user: User | null;
   isLoading: boolean;
   fetchUserData: () => void;
-  updateUser: (name: string, address: string) => void;
+  updateUser: (name: string, address: string, phoneNumber: string) => void;
   addToCart: (stickerId: string, quantity: number) => void;
   removeFromCart: (stickerId: string) => void;
   updateCart: (stickerId: string, quantity: number) => void;
@@ -57,17 +57,22 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [loadUserData, session]);
 
-  const updateUser = async (name: string, address: string) => {
+  const updateUser = async (
+    name: string,
+    address: string,
+    phoneNumber: string,
+  ) => {
     if (!user) return;
 
     setUser({
       ...user,
       name,
+      phoneNumber,
       address,
     });
 
     try {
-      await updateUserData(user._id, { name, address });
+      await updateUserData(user._id, { name, address, phoneNumber });
       toast.success('Profile updated');
     } catch (error: any) {
       toast.error('Failed to update profile');

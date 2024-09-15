@@ -21,6 +21,7 @@ export interface UserInterface {
   email: string;
   password: string;
   role: string;
+  phoneNumber: string;
   address?: string;
   cartItems: CartItem[];
   orders: string[];

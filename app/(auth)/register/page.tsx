@@ -2,18 +2,22 @@
 import { register } from '@/action/user';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 
 function Register() {
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    setLoading(true);
     const formData = new FormData(e.currentTarget);
-    const result = await register(formData);
-
-    if (result.error) {
-      toast.error(result.error);
+    const res = await register(formData);
+    if (res?.error) {
+      toast.error(res?.error);
+      setLoading(false);
     } else {
       toast.success('Account created successfully!');
       router.replace('/login');
@@ -29,28 +33,39 @@ function Register() {
           stickers, and enjoy personalized features.
         </p>
         <form className="flex w-full flex-col gap-4" onSubmit={handleSubmit}>
-          <div className="input-group">
-            <label htmlFor="name">Full Name</label>
-            <input type="text" id="name" name="name" required />
+          <div className="flex flex-col gap-2 md:flex-row">
+            <div className="input-group">
+              <label htmlFor="name">Full Name</label>
+              <input type="text" id="name" name="name" />
+            </div>
+            <div className="input-group">
+              <label htmlFor="email">Email</label>
+              <input type="email" id="email" name="email" />
+            </div>
+          </div>
+          <div className="flex flex-col gap-2 md:flex-row">
+            <div className="input-group">
+              <label htmlFor="password">Password</label>
+              <input type="password" id="password" name="password" />
+            </div>
+            <div className="input-group">
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+              />
+            </div>
           </div>
           <div className="input-group">
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="email" required />
+            <label htmlFor="phoneNumber">Phone Number</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" />
           </div>
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" name="password" required />
-          </div>
-          <div className="input-group">
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              required
-            />
-          </div>
-          <button className="btn-full mt-4" type="submit">
+          <button
+            className="btn-full mt-4 disabled:cursor-no-drop disabled:opacity-50"
+            type="submit"
+            disabled={loading}
+          >
             Create Account
           </button>
         </form>
