@@ -27,7 +27,6 @@ export async function middleware(req: NextRequest) {
     console.log('Token:', token);
 
     if (!token) {
-      console.log('Token is invalid or missing.');
       return new NextResponse('Forbidden', { status: 403 });
     }
 
@@ -46,14 +45,12 @@ export async function middleware(req: NextRequest) {
 
       // If user is requesting for own data it will send not other users
       if (id !== userId) {
-        console.log("User ID doesn't match the token.");
         return new NextResponse('Forbidden', { status: 403 });
       }
 
       return NextResponse.next();
     }
 
-    console.log('No matching role or route');
     return new NextResponse('Forbidden', { status: 403 });
   }
 
