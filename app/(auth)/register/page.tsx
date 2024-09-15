@@ -1,13 +1,16 @@
 'use client';
 import { register } from '@/action/user';
+import { Loading } from '@/components/common/Loading';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 function Register() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
+  const { status } = useSession();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,6 +26,15 @@ function Register() {
       router.replace('/login');
     }
   };
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.replace('/');
+    }
+  }, [router, status]);
+
+  // Redirect to Home if user is logged in
+  if (status === 'loading') return <Loading />;
 
   return (
     <section className="section pb-20">

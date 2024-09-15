@@ -3,7 +3,7 @@ import { Loading } from '@/components/common/Loading';
 import { signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
 function Login() {
@@ -53,16 +53,17 @@ function Login() {
     if (res?.error) {
       toast.error(res.error);
       setLoading(false);
-    } else {
-      router.push('/');
     }
   };
 
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.replace('/');
+    }
+  }, [router, status]);
+
   // Redirect to Home if user is logged in
   if (status === 'loading') return <Loading />;
-  else if (status === 'authenticated') {
-    router.replace('/');
-  }
 
   return (
     <section className="section pb-20">

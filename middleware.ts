@@ -23,8 +23,11 @@ export async function middleware(req: NextRequest) {
   if (crudRoutes.some((route) => pathname.startsWith(route))) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
+    // Add logging for token retrieval
+    console.log('Token:', token);
+
     if (!token) {
-      // Token is not present or invalid
+      console.log('Token is invalid or missing.');
       return new NextResponse('Forbidden', { status: 403 });
     }
 
@@ -43,12 +46,14 @@ export async function middleware(req: NextRequest) {
 
       // If user is requesting for own data it will send not other users
       if (id !== userId) {
+        console.log("User ID doesn't match the token.");
         return new NextResponse('Forbidden', { status: 403 });
       }
 
       return NextResponse.next();
     }
 
+    console.log('No matching role or route');
     return new NextResponse('Forbidden', { status: 403 });
   }
 

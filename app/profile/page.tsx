@@ -31,12 +31,12 @@ function Profile() {
 
     const name = formData.get('name') as string;
     const address = formData.get('address') as string;
-    const phoneNumber = formData.get('phoneData') as string;
+    const phoneNumber = formData.get('phoneNumber') as string;
 
     try {
       setLoading(true);
       await profileValidationSchema.validate({ name, address, phoneNumber });
-      updateUser(name, address, phoneNumber);
+      await updateUser(name, address, phoneNumber);
     } catch (e: any) {
       toast.error(e.message);
     } finally {
