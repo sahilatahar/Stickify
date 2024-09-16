@@ -39,9 +39,9 @@ function PersonalizedOrder() {
   });
 
   return (
-    <section className="section pb-20">
-      <h1 className="section-title text-center">Order Personalized Sticker</h1>
-      <div className="mx-auto flex w-full flex-col md:flex-row lg:max-w-2xl">
+    <section className="card-section">
+      <div className="card lg:max-w-2xl">
+        <h1 className="card-title">Order Personalized Sticker</h1>
         <form className="flex w-full flex-col gap-4">
           <div className="input-group">
             <label htmlFor="name">Name</label>
@@ -96,7 +96,7 @@ function PersonalizedOrder() {
                 <h3 className="text-lg font-medium text-text-secondary">
                   Upload or Drop Your Images
                 </h3>
-                <p className="text-sm text-text-secondary">
+                <p className="px-2 text-center text-sm text-text-secondary">
                   Supported formats: PNG, JPEG, JPG Max file size: 5MB.
                 </p>
                 <input {...getInputProps()} />

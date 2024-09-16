@@ -66,9 +66,9 @@ function Login() {
   if (status === 'loading') return <Loading />;
 
   return (
-    <section className="section pb-20">
-      <h1 className="section-title pb-4 text-center">Login to Your Account</h1>
-      <div className="mx-auto md:max-w-xl">
+    <section className="card-section">
+      <div className="card">
+        <h1 className="card-title">Login to Your Account</h1>
         <p className="pb-8 text-center text-lg text-text-secondary">
           Log in to your account to access personalized stickers, order history,
           and more.

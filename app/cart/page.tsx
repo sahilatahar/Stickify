@@ -31,7 +31,7 @@ function Cart() {
         <span className="min-w-fit">Your Cart</span>
         <hr className="w-2/3" />
       </h1>
-      <p className="mx-auto max-w-screen-lg px-4 text-center text-lg text-text-secondary">
+      <p className="mx-auto max-w-screen-lg text-center text-lg text-text-secondary">
         Your cart items are listed below. Browse and review your selected
         stickers. When you&apos;re ready, you can place your order using the
         stickers in your cart or upload custom designs. Getting your stickers

@@ -23,9 +23,6 @@ export async function middleware(req: NextRequest) {
   if (crudRoutes.some((route) => pathname.startsWith(route))) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
-    // Add logging for token retrieval
-    console.log('Token:', token);
-
     if (!token) {
       return new NextResponse('Forbidden', { status: 403 });
     }

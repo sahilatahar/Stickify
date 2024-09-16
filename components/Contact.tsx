@@ -1,7 +1,51 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { FormEvent, useState } from 'react';
+import toast from 'react-hot-toast';
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required('Name is required'),
+  email: Yup.string()
+    .email('Invalid email address')
+    .required('Email is required'),
+  subject: Yup.string().required('Subject is required'),
+  message: Yup.string().required('Message is required'),
+});
 
 function Contact() {
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const subject = formData.get('subject') as string;
+    const message = formData.get('message') as string;
+
+    try {
+      setLoading(true);
+
+      await validationSchema.validate(
+        { name, email, subject, message },
+        { abortEarly: false },
+      );
+
+      // Send Message here
+
+      toast.success('Message sent successfully!');
+    } catch (err: any) {
+      if (err?.inner) {
+        const validationError = err.inner[0].message;
+        toast.error(validationError);
+      }
+      toast.error(err.message);
+    }
+  };
+
   return (
     <section className="section pb-12" id="contact-us">
       <h1 className="section-title flex items-center gap-4">
@@ -66,7 +110,10 @@ function Contact() {
             </div>
           </li>
         </ul>
-        <form className="w-full space-y-4 md:w-1/2">
+        <form
+          className="w-full space-y-4 md:w-1/2"
+          onSubmit={handleSendMessage}
+        >
           <div className="flex flex-col gap-4 md:flex-row">
             <input
               type="text"
@@ -97,11 +144,13 @@ function Contact() {
             rows={5}
             placeholder="Message"
           ></textarea>
-          <input
+          <button
+            className="btn-full mt-4 disabled:cursor-no-drop disabled:opacity-50"
             type="submit"
-            value="Send Message"
-            className="w-full rounded-md bg-primary p-3 text-lg text-white outline-none"
-          />
+            disabled={loading}
+          >
+            {!loading ? 'Sending message...' : 'Send Message'}
+          </button>
         </form>
       </div>
     </section>

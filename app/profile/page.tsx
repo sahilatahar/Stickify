@@ -48,9 +48,9 @@ function Profile() {
   else if (!session?.user) router.push('/login');
 
   return (
-    <section className="section pb-20">
-      <h1 className="section-title pb-8 text-center md:pt-0">Your Profile</h1>
-      <div className="mx-auto flex w-full max-w-lg flex-col md:flex-row">
+    <section className="card-section">
+      <div className="card">
+        <h1 className="card-title">Your Profile</h1>
         <form onSubmit={handleUpdate} className="flex w-full flex-col gap-4">
           <div className="flex flex-wrap gap-4">
             <div className="input-group">
@@ -93,7 +93,7 @@ function Profile() {
               />
             </div>
           </div>
-          <div className="mt-4 flex flex-row gap-4">
+          <div className="mt-4 flex flex-row gap-2 md:gap-4">
             <button
               type="button"
               className="btn mx-auto flex-[0.3] bg-danger md:w-fit md:flex-[0.2] md:px-8"

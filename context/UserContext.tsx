@@ -96,10 +96,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const updatedUser = await addToCart(user._id, stickerId, quantity);
       setUser(updatedUser);
-      toast.success('Added to cart');
     } catch (error: any) {
       setUser({ ...user, cartItems: previousCart });
-      toast.error('Failed to add into cart');
+      toast.error('Unable to add item to cart. Please try again.');
     }
   };
 
@@ -119,10 +118,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const updatedUser = await removeFromCart(user._id, stickerId);
       setUser(updatedUser);
-      toast.success('Removed from cart');
     } catch (error: any) {
       setUser({ ...user, cartItems: previousCart });
-      toast.error('Failed to removing from cart');
+      toast.error('Unable to remove from cart. Please try again.');
     }
   };
 

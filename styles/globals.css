@@ -19,6 +19,18 @@
     @apply pb-16 pt-8 text-center text-2xl font-semibold text-text-primary md:text-3xl;
   }
 
+  .card-section {
+    @apply sm:gradient px-4 py-4 pb-20 sm:px-8 sm:py-8 lg:px-16 lg:py-10;
+  }
+
+  .card {
+    @apply mx-auto flex w-full max-w-lg flex-col rounded-lg bg-white p-0 shadow-none sm:p-8 sm:shadow-box;
+  }
+
+  .card-title {
+    @apply py-6 text-center text-2xl font-semibold text-text-primary md:text-3xl;
+  }
+
   .input-group {
     @apply flex w-full flex-col gap-2;
   }

@@ -17,12 +17,12 @@ function StickerGallery() {
 
   return (
     <section className="section pt-8">
-      <h1 className="section-title flex items-center gap-4">
+      <h1 className="section-title flex items-center gap-4 text-3xl">
         <hr className="w-2/3" />
         <span className="min-w-fit">Sticker Gallery</span>
         <hr className="w-2/3" />
       </h1>
-      <p className="mx-auto max-w-screen-lg px-4 text-center text-lg text-text-secondary">
+      <p className="mx-auto max-w-screen-lg text-center text-lg text-text-secondary">
         Browse our collection of stickers and add your favorites to your cart.
         When you&apos;re ready to place your order, you can either use the
         selected stickers or upload your own custom designs. Getting your

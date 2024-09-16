@@ -37,15 +37,15 @@ function Register() {
   if (status === 'loading') return <Loading />;
 
   return (
-    <section className="section pb-20">
-      <h1 className="section-title pb-4 text-center">Create Your Account</h1>
-      <div className="mx-auto md:max-w-xl">
+    <section className="card-section">
+      <div className="card max-w-xl">
+        <h1 className="card-title">Create Your Account</h1>
         <p className="pb-8 text-center text-lg text-text-secondary">
           Create an account to easily manage your orders, customize your
           stickers, and enjoy personalized features.
         </p>
         <form className="flex w-full flex-col gap-4" onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-2 md:flex-row">
+          <div className="flex flex-col gap-2 sm:flex-row">
             <div className="input-group">
               <label htmlFor="name">Full Name</label>
               <input type="text" id="name" name="name" />
@@ -55,7 +55,7 @@ function Register() {
               <input type="email" id="email" name="email" />
             </div>
           </div>
-          <div className="flex flex-col gap-2 md:flex-row">
+          <div className="flex flex-col gap-2 sm:flex-row">
             <div className="input-group">
               <label htmlFor="password">Password</label>
               <input type="password" id="password" name="password" />
